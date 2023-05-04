@@ -1,6 +1,9 @@
+import 'package:chatapp_firebase/helper/helper_function.dart';
+import 'package:chatapp_firebase/pages/home_page.dart';
 import 'package:chatapp_firebase/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:chatapp_firebase/services/database_services.dart';
 
 import '../widgets/widgets.dart';
 import 'login_page.dart';
@@ -161,12 +164,15 @@ class _RegisterPageState extends State<RegisterPage> {
        setState(() {
          _isLoading = true;
        });
-       await authService.registerUserWithEmailandpassword(fullName, email, password).then((value){
+       await authService.registerUserWithEmailandPassword(fullName, email, password).then((value) async{
          if(value==true){
-
+            await HelperFunctions.saveUserLoggedInStatus(true);
+            await HelperFunctions.saveUserEmailSF(email);
+            await HelperFunctions.saveUserNameSF(fullName);
+            nextScreenReplace(context, const HomePage());
          }
          else{
-           showSnackbar()
+           showSnackbar(context,Colors.red,value);
            setState(() {
              _isLoading = false;
            });
