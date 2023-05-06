@@ -1,24 +1,23 @@
-
-import 'package:chatapp_firebase/helper/helper_function.dart';
-import 'package:chatapp_firebase/pages/profile_page.dart';
-import 'package:chatapp_firebase/pages/search_page.dart';
+import 'package:chatapp_firebase/pages/home_page.dart';
 import 'package:chatapp_firebase/services/auth_services.dart';
-import 'package:chatapp_firebase/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../helper/helper_function.dart';
+import '../widgets/widgets.dart';
 import 'auth/login_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Profilepage extends StatefulWidget {
+  const Profilepage({Key? key}) : super(key: key);
+
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Profilepage> createState() => _ProfilepageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfilepageState extends State<Profilepage> {
+  AuthService authService = AuthService();
   String userName = "";
 
   String email = "";
-  AuthService authService = AuthService();
 
   @override
   void initState(){
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     });
     await HelperFunctions.getUserNameFromSF().then((val) {
       setState(() {
-          userName = val!;
+        userName = val!;
       });
     });
   }
@@ -42,20 +41,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            nextScreen(context, const SearchPage());
-          }, icon: const Icon(Icons.search))
-        ],
-        elevation: 0,
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
-        title:const  Text("Groups",
-        style: TextStyle(
-          color: Colors.white,fontWeight: FontWeight.bold,fontSize: 27),
-        ),
-      ),
+     appBar: AppBar(
+       backgroundColor: Theme.of(context).primaryColor,
+       elevation: 0,
+       title: const Text("Profile",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 27),),
+
+     ),
       drawer: Drawer(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 50),
@@ -74,19 +65,19 @@ class _HomePageState extends State<HomePage> {
               height: 2,
             ),
             ListTile(
-              onTap: (){},
+              onTap: (){
+                nextScreenReplace(context, HomePage());
+              },
               selectedColor: Theme.of(context).primaryColor,
-              selected: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
               leading: const Icon(Icons.group),
               title: const Text("Groups",
-              style: TextStyle(color: Colors.black),),
+                style: TextStyle(color: Colors.black),),
             ),
             ListTile(
-              onTap: () async{
-                nextScreen(context, const Profilepage());
-              },
+              onTap: () async{},
               selectedColor: Theme.of(context).primaryColor,
+              selected: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
               leading: const Icon(Icons.person),
               title: const Text("Profile",
@@ -95,26 +86,26 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               onTap: ()async{
                 showDialog(
-                  barrierDismissible: false,
+                    barrierDismissible: false,
                     context: context,
                     builder: (context){
                       return  AlertDialog(
-                    title: const Text("Logout"),
-                    content: const Text("Are you sure you want to logout?"),
-                    actions: [
-                      IconButton(onPressed:(){Navigator.pop(context);},
-                        icon: const Icon(Icons.cancel,color: Colors.red,),
-                      ),
-                      IconButton(onPressed:() async{
-                        await authService.signOut();
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> const LoginPage()),
-                                (route) => false);
-                        },
-                        icon: const Icon(Icons.done,color: Colors.green,),
-                      )
-                    ],
-                  );
-                });
+                        title: const Text("Logout"),
+                        content: const Text("Are you sure you want to logout?"),
+                        actions: [
+                          IconButton(onPressed:(){Navigator.pop(context);},
+                            icon: const Icon(Icons.cancel,color: Colors.red,),
+                          ),
+                          IconButton(onPressed:() async{
+                            await authService.signOut();
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> const LoginPage()),
+                                    (route) => false);
+                          },
+                            icon: const Icon(Icons.done,color: Colors.green,),
+                          )
+                        ],
+                      );
+                    });
               },
               selectedColor: Theme.of(context).primaryColor,
               contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
@@ -126,6 +117,23 @@ class _HomePageState extends State<HomePage> {
 
         ),
       ),
+        body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.account_circle, size: 200,color: Colors.grey[700],),
+            const SizedBox(height: 15,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Full Name", style: TextStyle(fontSize: 27),),
+                Text(widget.userName, style: ,)
+              ],
+            )
+          ],
+        ),
+    ),
+
     );
   }
 }

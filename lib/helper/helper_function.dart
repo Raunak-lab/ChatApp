@@ -28,8 +28,19 @@ static Future<bool> saveUserLoggedInStatus(bool isUserLoggedIn) async{
 
   //getting the data from sf
 
-static Future<bool?> getUserLoggedInStats() async{
+static Future<bool?> getUserLoggedInStatus() async{
   SharedPreferences sf = await SharedPreferences.getInstance();
   return sf.getBool(userLoggedInKey);
   }
+
+  static Future<String?> getUserEmailFromSF() async{
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    return sf.getString(userEmailKey);
+  }
+  static Future<String?> getUserNameFromSF() async{
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    return sf.getString(userNameKey);
+  }
+
+
 }

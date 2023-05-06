@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp_firebase/services/database_services.dart';
 
-import '../widgets/widgets.dart';
+import '../../widgets/widgets.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
