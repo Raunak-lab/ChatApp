@@ -6,37 +6,20 @@ import '../helper/helper_function.dart';
 import '../widgets/widgets.dart';
 import 'auth/login_page.dart';
 
-class Profilepage extends StatefulWidget {
-  const Profilepage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  String userName ;
+
+  String email ;
+
+   ProfilePage({Key? key, required this.userName,required this.email}) : super(key: key);
 
   @override
-  State<Profilepage> createState() => _ProfilepageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilepageState extends State<Profilepage> {
+class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-  String userName = "";
 
-  String email = "";
-
-  @override
-  void initState(){
-    super.initState();
-    gettingUserData();
-  }
-
-  gettingUserData() async{
-    await HelperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-    await HelperFunctions.getUserNameFromSF().then((val) {
-      setState(() {
-        userName = val!;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +39,7 @@ class _ProfilepageState extends State<Profilepage> {
             const SizedBox(
               height: 15,
             ),
-            Text(userName,textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.bold),),
+            Text(widget.userName,textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.bold),),
 
             const SizedBox(
               height: 30,
@@ -123,12 +106,28 @@ class _ProfilepageState extends State<Profilepage> {
           children: [
             Icon(Icons.account_circle, size: 200,color: Colors.grey[700],),
             const SizedBox(height: 15,),
-            Row(
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Full Name", style: TextStyle(fontSize: 17),),
+                  Text(widget.userName, style: const TextStyle(fontSize:17),)
+                ],
+              ),
+            ),
+            const Divider(
+              height: 20,
+            ),
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+              child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Full Name", style: TextStyle(fontSize: 27),),
-                Text(widget.userName, style: ,)
+                const Text("Email", style: TextStyle(fontSize: 17),),
+                Text(widget.email, style: const TextStyle(fontSize:17),)
               ],
+            ),
             )
           ],
         ),
