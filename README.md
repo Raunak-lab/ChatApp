@@ -70,6 +70,11 @@ lib/services: Customize the Firebase-related services if needed.
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
+## View Counter
+
+![Visitor Count](https://profile-counter.glitch.me/{Raunak-lab}/count.svg)
+
+
 ## Acknowledgements
 
 This app was developed using Flutter, a UI toolkit by Google.
