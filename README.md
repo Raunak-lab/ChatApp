@@ -35,7 +35,7 @@ Real-time chat: Once inside a group, users can send and receive messages in real
 ### Clone the repository:
 
 ```
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/Raunak-lab/ChatApp.git
 ```
 
 ### Set up Firebase:
